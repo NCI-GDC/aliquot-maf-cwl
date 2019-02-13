@@ -65,8 +65,8 @@ expression: |
        }
      }
 
-     for(var i = 0; i<target_intervals_record.length; i++) {
-       var res = target_intervals_record[i];
+     for(var i = 0; i<inputs.target_intervals_record.length; i++) {
+       var res = inputs.target_intervals_record[i];
        indexed_output.push({"key": "target_intervals", "uuid": res.main_file_uuid, "index_uuid": res.index_file_uuid}); 
      }
 

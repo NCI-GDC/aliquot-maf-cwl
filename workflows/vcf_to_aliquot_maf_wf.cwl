@@ -137,29 +137,65 @@ steps:
       min_n_depth: min_n_depth
       custom_enst:
         source: stage_data/optional_files
-        valueFrom: $(lookup_optional_file(self, "custom_enst_uuid"))
+        valueFrom: |
+          ${
+             var f = lookup_optional_file(self, "custom_enst_uuid");
+             return f.length == 0 ? null : f[0];
+           }
       dbsnp_priority_db:
         source: stage_data/optional_files
-        valueFrom: $(lookup_optional_file(self, "dbsnp_priority_db_uuid"))
+        valueFrom: |
+          ${
+             var f = lookup_optional_file(self, "dbsnp_priority_db_uuid");
+             return f.length == 0 ? null : f[0];
+           }
       cosmic_vcf:
         source: stage_data/optional_files
-        valueFrom: $(lookup_optional_file(self, "cosmic_vcf_uuid"))
+        valueFrom: |
+          ${
+             var f = lookup_optional_file(self, "cosmic_vcf_uuid");
+             return f.length == 0 ? null : f[0];
+           }
       non_tcga_exac_vcf:
         source: stage_data/optional_files
-        valueFrom: $(lookup_optional_file(self, "non_tcga_exact_vcf_uuid"))
+        valueFrom: |
+          ${
+             var f = lookup_optional_file(self, "non_tcga_exac_vcf_uuid");
+             return f.length == 0 ? null : f[0];
+           }
       hotspot_tsv:
         source: stage_data/optional_files
-        valueFrom: $(lookup_optional_file(self, "hotspot_tsv_uuid"))
+        valueFrom: |
+          ${
+             var f = lookup_optional_file(self, "hotspot_tsv_uuid");
+             return f.length == 0 ? null : f[0];
+           }
       gdc_blacklist:
         source: stage_data/optional_files
-        valueFrom: $(lookup_optional_file(self, "gdc_blacklist_uuid"))
+        valueFrom: |
+          ${
+             var f = lookup_optional_file(self, "gdc_blacklist_uuid");
+             return f.length == 0 ? null : f[0];
+           }
       gdc_pon_vcf:
         source: stage_data/optional_files
-        valueFrom: $(lookup_optional_file(self, "gdc_pon_vcf_uuid"))
+        valueFrom: |
+          ${
+             var f = lookup_optional_file(self, "gdc_pon_vcf_uuid");
+             return f.length == 0 ? null : f[0];
+           }
       nonexonic_intervals:
         source: stage_data/optional_files
-        valueFrom: $(lookup_optional_file(self, "nonexonic_intervals_uuid"))
+        valueFrom: |
+          ${
+             var f = lookup_optional_file(self, "nonexonic_intervals_uuid");
+             return f.length == 0 ? null : f[0];
+           }
       target_intervals:
         source: stage_data/optional_files
-        valueFrom: $(lookup_optional_file(self, "target_intervals"))
+        valueFrom: |
+          ${
+             var f = lookup_optional_file(self, "target_intervals");
+             return f.length == 0 ? null : f;
+           }
     out: [ output_maf ]

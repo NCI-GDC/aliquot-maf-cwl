@@ -38,15 +38,14 @@
 
 - |
   function lookup_optional_file(opt_obj, key) {
-    var res = null;
+    var res = [];
 
     for (var i=0; i<opt_obj.length; i++) {
       var curr = opt_obj[i];
       if(curr.key == key) {
-        res = curr.file;
-        break;
+        res.push(curr.file);
       }
     }
 
-    return res;
+    return res; 
   }
