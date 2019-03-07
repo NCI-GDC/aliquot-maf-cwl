@@ -34,7 +34,6 @@ inputs:
   gdc_pon_vcf_index_uuid: string?
   nonexonic_intervals_uuid: string?
   nonexonic_intervals_index_uuid: string?
-  tumor_only: boolean?
   target_intervals_record:
     type:
       type: array
@@ -65,13 +64,13 @@ inputs:
   caller_id: string
 
 outputs:
-  raw_aliquot_maf:
-    type: File
-    outputSource: make_raw_aliquot_maf/output_maf
+  aliquot_maf_uuid:
+    type: string 
+    outputSource: upload_aliquot_maf/uuid
 
 steps:
   stage_data:
-    run: ./subworkflows/stage_data_workflow.cwl
+    run: ./subworkflows/stage_data_workflow.vcf_to_aliquot_maf.cwl
     in:
       bioclient_config: bioclient_config
       annotated_vcf_uuid: annotated_vcf_uuid
@@ -109,14 +108,13 @@ steps:
       experimental_strategy: experimental_strategy
     out: [ output ]
 
-  make_raw_aliquot_maf:
-    run: ../tools/vcf_to_raw_aliquot_maf.cwl
+  make_aliquot_maf:
+    run: ../tools/vcf_to_aliquot_maf.cwl
     in:
       input_vcf: stage_data/annotated_vcf
       output_filename:
         source: get_file_prefix/output 
-        valueFrom: $(self + '.raw.maf.gz')
-      tumor_only: tumor_only 
+        valueFrom: $(self + '.aliquot.maf.gz')
       caller_id: caller_id
       src_vcf_uuid: annotated_vcf_uuid
       case_uuid: case_uuid
@@ -199,3 +197,14 @@ steps:
              return f.length == 0 ? null : f;
            }
     out: [ output_maf ]
+
+  upload_aliquot_maf:
+    run: ../tools/bioclient_upload_pull_uuid.cwl
+    in:
+      config-file: bioclient_config
+      upload-bucket: upload_bucket 
+      upload-key:
+        source: [ job_uuid, make_aliquot_maf/output_maf ]
+        valueFrom: $(self[0] + '/' + self[1].basename)
+      input: make_aliquot_maf/output_maf
+    out: [ output, uuid ] 
