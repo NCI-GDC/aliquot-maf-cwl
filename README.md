@@ -55,6 +55,6 @@ An `indexed_file` object id defined as:
 }
 ```
 
-** Outputs **
+**Outputs**
 
 * `aliquot_maf_uuid` - the UUID of the generated aliquot MAF file
