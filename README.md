@@ -40,8 +40,21 @@ Workflow: `workflows/vcf_to_aliquot_maf_wf.cwl`
 | reference_fasta_index_uuid | uuid | main chromosome reference fai uuid |
 | reference_fasta_uuid | uuid | main chromosome reference fasta uuid |
 | sequencer | string[] | list of sequencers used |
-| target_intervals_record | indexd_file[]| list of targeted sequencing `indexed_file` objects |
+| target_intervals_record | indexed_file[]| list of targeted sequencing `indexed_file` objects |
 | tumor_aliquot_uuid | uuid | tumor aliquot uuid |
 | tumor_bam_uuid | uuid | tumor aliquot's bam uuid |
 | tumor_submitter_id | string | tumor aliquot's submitter id |
 | upload_bucket | string | upload bucket uri |
+
+An `indexed_file` object id defined as:
+
+```
+{
+  "main_file_uuid": "<UUID>",
+  "index_file_uuid": "<UUID>"
+}
+```
+
+** Outputs **
+
+* `aliquot_maf_uuid` - the UUID of the generated aliquot MAF file
