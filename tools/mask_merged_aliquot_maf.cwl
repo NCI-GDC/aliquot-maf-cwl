@@ -18,6 +18,10 @@ requirements:
     outdirMax: $(size_from_input_object(inputs))
 
 inputs:
+  output_stats_filename:
+    type: string
+    doc: capture stdout to this json filename
+
   input_maf:
     type: File 
     doc: input raw merged MAF to filter 
@@ -59,5 +63,9 @@ outputs:
     type: File
     outputBinding:
       glob: $(inputs.output_filename)
+  output_stats_json:
+    type: stdout
+
+stdout: $(inputs.output_stats_filename)
 
 baseCommand: [/usr/local/bin/aliquot-maf-tools, MaskMergedAliquotMaf]
