@@ -75,4 +75,17 @@ Workflow: `workflows/ensemble_aliquot_maf_wf.cwl`
 | min_n_depth | float | minimal Normal depth cutoff after averaging (_7_) |
 | upload_bucket | string | upload bucket uri |
 
-An `optional_file_uuid` object
+An `optional_file_uuid` object:
+
+```
+{
+    "key": "<caller>",
+    "uuid": "<maf_uuid>"
+}
+```
+
+**Outputs**
+
+* `aliquot_merged_raw_maf_uuid` - the UUID of the raw merged MAF
+* `aliquot_merged_masked_maf_uuid` - the UUID of the masked merged MAF
+* `aliquot_maf_metrics_uuid` - the UUID of the metrics JSON file
