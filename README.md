@@ -58,3 +58,21 @@ An `indexed_file` object id defined as:
 **Outputs**
 
 * `aliquot_maf_uuid` - the UUID of the generated aliquot MAF file
+
+## Aggregate/merge aliquot MAF from different callers
+
+Workflow: `workflows/ensemble_aliquot_maf_wf.cwl`
+
+**Inputs**
+
+| Input | Type | Description |
+| ----- | ---- | ----------- |
+| aliquot_maf_uuid_list | optional_file_uuid[] | input list of `optional_file_uuid` objects |
+| bioclient_config | file | bioclient config file |
+| experimental_strategy | string | experimental strategy |
+| job_uuid | uuid | uuid of the workflow job |
+| min_callers | int | minimum number of callers supporting the variant for masked merged maf file (_2_) |
+| min_n_depth | float | minimal Normal depth cutoff after averaging (_7_) |
+| upload_bucket | string | upload bucket uri |
+
+An `optional_file_uuid` object
