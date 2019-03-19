@@ -17,7 +17,7 @@ inputs:
   upload_bucket: string
   job_uuid: string
   experimental_strategy: string
-  aliquot_maf_uuids:
+  aliquot_maf_uuid_list:
     type:
       type: array
       items: ../tools/schemas.cwl#optional_file_uuid
@@ -44,7 +44,7 @@ steps:
     run: ./subworkflows/stage_data_workflow.ensemble_mafs.cwl
     in:
       bioclient_config: bioclient_config
-      aliquot_maf_uuids: aliquot_maf_uuids
+      aliquot_maf_uuids: aliquot_maf_uuid_list
     out: [ maf_files ]
 
   get_file_prefix:
