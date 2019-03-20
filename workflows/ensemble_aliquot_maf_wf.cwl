@@ -96,6 +96,13 @@ steps:
              var f = lookup_optional_file(self, "SomaticSniper");
              return f.length == 0 ? null : f[0];
            }
+      pindel_maf:
+        source: stage_data/maf_files
+        valueFrom: |
+          ${
+             var f = lookup_optional_file(self, "Pindel");
+             return f.length == 0 ? null : f[0];
+           }
     out: [ output_merged_maf ]
 
   mask_merged_raw_maf:
