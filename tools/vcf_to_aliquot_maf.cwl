@@ -5,7 +5,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/aliquot-maf-tools:6f3666bc0b1b758fa5df33e2048bcaf8af800d99
+    dockerPull: quay.io/ncigdc/aliquot-maf-tools:6beb11c2acc3ddc0588cda35d769f8c0694c8a78
   - class: InlineJavascriptRequirement
     expressionLib:
       $import: ./util_lib.cwl
