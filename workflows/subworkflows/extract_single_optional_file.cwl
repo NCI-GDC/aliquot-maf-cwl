@@ -3,19 +3,20 @@ cwlVersion: v1.0
 class: Workflow
 
 requirements:
-  - class: InlineJavascriptRequirement
-  - class: StepInputExpressionRequirement
-  - class: SchemaDefRequirement
+  InlineJavascriptRequirement: {}
+  StepInputExpressionRequirement: {}
+  SchemaDefRequirement:
     types:
-      - $import: ../../tools/schemas.cwl
+      - $import: ../../tools/schemas/optional_file_uuid.yaml
+      - $import: ../../tools/schemas/optional_file.yaml
 
 inputs:
   bioclient_config: File
-  single_file: ../../tools/schemas.cwl#optional_file_uuid
+  single_file: ../../tools/schemas/optional_file_uuid.yaml#optional_file_uuid
 
 outputs:
   output_single_file:
-    type: ../../tools/schemas.cwl#optional_file
+    type: ../../tools/schemas/optional_file.yaml#optional_file
     outputSource: make_optional/output 
 
 steps:

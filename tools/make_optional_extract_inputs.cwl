@@ -4,7 +4,9 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: SchemaDefRequirement
     types:
-      - $import: ./schemas.cwl
+      - $import: ./schemas/indexed_file.yaml
+      - $import: ./schemas/optional_file.yaml
+      - $import: ./schemas/optional_file_uuid.yaml
 
 class: ExpressionTool
 
@@ -24,17 +26,17 @@ inputs:
   target_intervals_record:
     type:
       type: array
-      items: ./schemas.cwl#indexed_file
+      items: ./schemas/indexed_file.yaml#indexed_file
 
 outputs:
   single_output:
     type:
       type: array
-      items: ./schemas.cwl#optional_file_uuid
+      items: ./schemas/optional_file_uuid.yaml#optional_file_uuid
   indexed_output:
     type:
       type: array
-      items: ./schemas.cwl#optional_file_uuid
+      items: ./schemas/optional_file_uuid.yaml#optional_file_uuid
   
 expression: |
   ${

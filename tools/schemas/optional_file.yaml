@@ -1,0 +1,7 @@
+type: record
+name: optional_file
+fields:
+  - name: key
+    type: string
+  - name: file
+    type: File

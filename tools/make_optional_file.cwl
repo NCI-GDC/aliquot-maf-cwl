@@ -1,10 +1,10 @@
 cwlVersion: v1.0
 
 requirements:
-  - class: InlineJavascriptRequirement
-  - class: SchemaDefRequirement
+  InlineJavascriptRequirement: {}
+  SchemaDefRequirement:
     types:
-      - $import: ./schemas.cwl
+      - $import: ./schemas/optional_file.yaml
 
 class: ExpressionTool
 
@@ -13,7 +13,7 @@ inputs:
   main_file: File
 
 outputs:
-  output: ./schemas.cwl#optional_file
+  output: ./schemas/optional_file.yaml#optional_file
   
 expression: |
   ${

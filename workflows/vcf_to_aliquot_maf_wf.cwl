@@ -10,7 +10,9 @@ requirements:
   - class: MultipleInputFeatureRequirement
   - class: SchemaDefRequirement
     types:
-      - $import: ../tools/schemas.cwl
+      - $import: ../tools/schemas/indexed_file.yaml
+      - $import: ../tools/schemas/optional_file.yaml
+      - $import: ../tools/schemas/optional_file_uuid.yaml
 
 inputs:
   bioclient_config: File
@@ -37,7 +39,7 @@ inputs:
   target_intervals_record:
     type:
       type: array
-      items: ../tools/schemas.cwl#indexed_file
+      items: ../tools/schemas/indexed_file.yaml#indexed_file
   case_uuid: string
   experimental_strategy: string
   tumor_submitter_id: string

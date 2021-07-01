@@ -4,7 +4,7 @@ requirements:
   - class: InlineJavascriptRequirement
   - class: SchemaDefRequirement
     types:
-      - $import: schemas.cwl
+      - $import: ./schemas/optional_file.yaml
 
 class: ExpressionTool
 
@@ -12,18 +12,18 @@ inputs:
   input_a:
     type:
       type: array
-      items: schemas.cwl#optional_file
+      items: ./schemas/optional_file.yaml#optional_file
 
   input_b:
     type:
       type: array
-      items: schemas.cwl#optional_file
+      items: ./schemas/optional_file.yaml#optional_file
 
 outputs:
   output:
     type:
       type: array
-      items: schemas.cwl#optional_file 
+      items: schemas/optional_file.yaml#optional_file 
 
 expression: |
   ${

@@ -5,17 +5,19 @@ class: Workflow
 requirements:
   - class: InlineJavascriptRequirement
   - class: StepInputExpressionRequirement
+  - class: SubworkflowFeatureRequirement
   - class: SchemaDefRequirement
     types:
-      - $import: ../../tools/schemas.cwl
+      - $import: ../../tools/schemas/optional_file_uuid.yaml
+      - $import: ../../tools/schemas/optional_file.yaml
 
 inputs:
   bioclient_config: File
-  indexed_file: ../../tools/schemas.cwl#optional_file_uuid
+  indexed_file: ../../tools/schemas/optional_file_uuid.yaml#optional_file_uuid
 
 outputs:
   output_indexed_optional_file:
-    type: ../../tools/schemas.cwl#optional_file 
+    type: ../../tools/schemas/optional_file.yaml#optional_file 
     outputSource: make_optional/output 
 
 steps:

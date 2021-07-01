@@ -9,20 +9,21 @@ requirements:
   - class: ScatterFeatureRequirement
   - class: SchemaDefRequirement
     types:
-      - $import: ../../tools/schemas.cwl
+      - $import: ../../tools/schemas/optional_file_uuid.yaml
+      - $import: ../../tools/schemas/optional_file.yaml
 
 inputs:
   bioclient_config: File
   aliquot_maf_uuids: 
     type:
       type: array
-      items: ../../tools/schemas.cwl#optional_file_uuid
+      items: ../../tools/schemas/optional_file_uuid.yaml#optional_file_uuid
 
 outputs:
   maf_files:
     type:
       type: array
-      items: ../../tools/schemas.cwl#optional_file
+      items: ../../tools/schemas/optional_file.yaml#optional_file
     outputSource: extract_single_files/output_single_file 
 
 steps:

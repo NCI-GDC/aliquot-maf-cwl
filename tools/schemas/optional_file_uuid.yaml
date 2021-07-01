@@ -1,0 +1,9 @@
+type: record
+name: optional_file_uuid
+fields:
+  - name: key
+    type: string
+  - name: uuid 
+    type: string
+  - name: index_uuid
+    type: string?

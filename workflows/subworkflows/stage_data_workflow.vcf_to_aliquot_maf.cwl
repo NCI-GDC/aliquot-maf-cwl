@@ -9,7 +9,9 @@ requirements:
   - class: ScatterFeatureRequirement
   - class: SchemaDefRequirement
     types:
-      - $import: ../../tools/schemas.cwl
+      - $import: ../../tools/schemas/indexed_file.yaml
+      - $import: ../../tools/schemas/optional_file.yaml
+      - $import: ../../tools/schemas/optional_file_uuid.yaml
 
 inputs:
   bioclient_config: File
@@ -34,7 +36,7 @@ inputs:
   target_intervals_record:
     type:
       type: array
-      items: ../../tools/schemas.cwl#indexed_file
+      items: ../../tools/schemas/indexed_file.yaml#indexed_file
 
 outputs:
   annotated_vcf:
@@ -60,7 +62,7 @@ outputs:
   optional_files:
     type:
       type: array
-      items: ../../tools/schemas.cwl#optional_file
+      items: ../../tools/schemas/optional_file.yaml#optional_file
     outputSource: run_merge_arrays/output
 
 steps:

@@ -10,7 +10,7 @@ requirements:
   - class: MultipleInputFeatureRequirement
   - class: SchemaDefRequirement
     types:
-      - $import: ../tools/schemas.cwl
+      - $import: ../tools/schemas/optional_file_uuid.yaml
 
 inputs:
   bioclient_config: File
@@ -20,7 +20,7 @@ inputs:
   aliquot_maf_uuid_list:
     type:
       type: array
-      items: ../tools/schemas.cwl#optional_file_uuid
+      items: ../tools/schemas/optional_file_uuid.yaml#optional_file_uuid
   min_n_depth:
     type: int
     default: 7
