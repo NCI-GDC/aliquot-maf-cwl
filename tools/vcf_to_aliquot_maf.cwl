@@ -1,18 +1,21 @@
-#!/usr/bin/env cwl-runner
 
 cwlVersion: v1.0
-
 class: CommandLineTool
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/aliquot-maf-tools:f7a5a7d87abd12cc6b644698bb90854bc9679a01
+    dockerPull: quay.io/ncigdc/aliquot-maf-tools:3c130add6de3617ad23599e74eeba07343323d0c
   - class: InlineJavascriptRequirement
     expressionLib:
       $import: ./util_lib.cwl
   - class: InitialWorkDirRequirement
-    listing:
-      - $(inputs.reference_fasta)
-      - $(inputs.reference_fasta_index)
+    listing: |
+      ${
+        var listing = []
+        listing.push(inputs.reference_fasta)
+        listing.push(inputs.reference_fasta_index)
+        listing = listing.concat(inputs.gnomad_ref_directory.listing)
+        return listing
+      }
   - class: ResourceRequirement
     coresMin: 1
     coresMax: 1
@@ -26,7 +29,7 @@ inputs:
     type: File
     doc: Tabix-indexed VEP annotated VCF file
     inputBinding:
-      prefix: --input_vcf 
+      prefix: --input_vcf
       position: 0
     secondaryFiles:
       - ".tbi"
@@ -40,7 +43,7 @@ inputs:
 
   maf_schema:
     type: string
-    default: gdc-1.0.0-aliquot
+    default: gdc-2.0.0-aliquot
     doc: the schema to use for the maf
     inputBinding:
       position: 2
@@ -125,7 +128,7 @@ inputs:
       prefix: --normal_aliquot_uuid
 
   normal_bam_uuid:
-    type: string? 
+    type: string?
     doc: Normal sample bam UUID
     inputBinding:
       position: 14
@@ -173,13 +176,6 @@ inputs:
       position: 19
       prefix: --custom_enst
 
-  dbsnp_priority_db:
-    type: File?
-    doc: DBSNP priority sqlite database
-    inputBinding:
-      position: 20
-      prefix: --dbsnp_priority_db
-
   reference_fasta:
     type: File
     doc: Reference fasta file
@@ -213,15 +209,6 @@ inputs:
     secondaryFiles:
       - ".tbi"
 
-  non_tcga_exac_vcf:
-    type: File?
-    doc: Optional non-TCGA ExAC VCF for annotating and filtering
-    inputBinding:
-      position: 25
-      prefix: --non_tcga_exac_vcf
-    secondaryFiles:
-      - ".tbi"
-
   hotspot_tsv:
     type: File?
     doc: Optional hotspot TSV
@@ -229,16 +216,8 @@ inputs:
       position: 26
       prefix: --hotspot_tsv
 
-  exac_freq_cutoff:
-    type: float
-    default: 0.001
-    doc: Flag variants where the allele frequency in any ExAC population is great than this value as common_in_exac [0.001]
-    inputBinding:
-      position: 27
-      prefix: --exac_freq_cutoff
-
   gdc_blacklist:
-    type: File? 
+    type: File?
     doc: The file containing the blacklist tags and tumor aliquot uuids to apply them to.
     inputBinding:
       position: 28
@@ -283,10 +262,31 @@ inputs:
     secondaryFiles:
       - ".tbi"
 
+  gnomad_ref_directory:
+    type: Directory
+    inputBinding:
+      position: 33
+      prefix: --gnomad_ref_prefix
+      valueFrom: |
+        ${
+          var somefile = inputs.gnomad_ref_directory.listing[0]
+          var idx = somefile.nameroot.lastIndexOf('.chr') + 1
+          var prefix = somefile.nameroot.substring(0, idx)
+          console.log(prefix)
+          return prefix
+        }
+
+  entrez_gene_id_json:
+    type: File
+    doc: JSON file used to look up entrez IDs given HGNC symbols or gencode IDs
+    inputBinding:
+      prefix: --entrez_gene_id_json
+      position: 35
+
 outputs:
   output_maf:
     type: File
     outputBinding:
       glob: $(inputs.output_filename)
-    
-baseCommand: [/usr/local/bin/aliquot-maf-tools, VcfToAliquotMaf]
+
+baseCommand: [VcfToAliquotMaf]

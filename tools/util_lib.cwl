@@ -6,7 +6,7 @@
       if(farr[i] != null) {
         total += farr[i].size
       }
-    } 
+    }
     return Math.ceil(total / divisor);
   }
 
@@ -47,5 +47,5 @@
       }
     }
 
-    return res; 
+    return res;
   }
