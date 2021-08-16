@@ -1,29 +1,27 @@
 services:
-  - docker
-
+- docker
 install: make docker-login build
-
 stages:
-  - name: test
-  - name: publish-release
-    if: branch = main AND type != pull_request
-  - name: publish-staging
-    if: branch != main AND type != pull_request
-
+- name: test
+- name: publish-release
+  if: branch = main AND type != pull_request
+- name: publish-staging
+  if: branch != main AND type != pull_request
 jobs:
   include:
-    - stage: test
-      name: Test
-      script:
-        - make validate
-    - stage: publish-staging
-      name: Publish staging image
-      script:
-        - make docker-login publish-staging
-    - stage: publish-release
-      name: Publish production image
-      script:
-        - make docker-login publish-release
-
+  - stage: test
+    name: Test
+    script:
+    - make validate
+  - stage: publish-staging
+    name: Publish staging image
+    script:
+    - make docker-login publish-staging
+  - stage: publish-release
+    name: Publish production image
+    script:
+    - make docker-login publish-release
 env:
   global:
+  - secure: L+jd+ZAsYKS+ty7/epe7j2EhOkWEmu9g4A5IFY42oLwC5e3UrdkXjTqFHAHvL+SVOAJbMSnxNSGrryu3nZbgpvIjXnv/SaBuqXfeLfNySO+GA9oZ+s9K2xUhkV6LDwSTHWACi8tYSJpPTYz9F7AaEwdj2OrdxhFBqygpSJRGExK2QCeul0+XA/h+HFJfwa9A6qD3PR4/eEXyofx0C8+OF0HrsuLmhbRcUy2FzL8dr7nY+ELT8XYuVbUJemHgM9c88tiavZlJAwW6BScn3rSQtXwuSeTKgVjN4mEZ48PCsOBwogrtTHs0Kb52j0j9DskNh9wpkesj5NWIMgr6HOJxHobucSdUT6bavWdvMzFrnkTmlmbO60zLM+77rqZtnkIa8IFXC3u51CMdL9dzRMhqn10seVWrk2PKrAA3WqYAO+q2VHB1XJeIH2fL9QkmjPZf5wKxLFWYjFEanG+CGxCmfCxpjtzfoqlksusR+2eLfMp7bt/Vfsd5OmWB72AQYO3qE64dnEzotvM/HNPNwPeLvgSQQR1CShVsFbOlV2TGr5WWY67y5zNIfKF2jBZH/Pa167Q9A8pzPmCrOutuFouTKlBI5DqjD8+ETsvOWMUoi5NE7MNtxjoVqQsdJhYR+5nPmBAoc6tG/U7YsbFt7W8pnWJGHCOUlu7E6tNTtMahxWU=
+  - secure: dTU5gPMPXD4bGMKyXxTlZjUQI+Lo8Rpb9ntz3DaL1f/362Njvw2ikas8bK3UiY5B9uzwhuKk3AQLwY8vOE6TiCeEwQ/XIkIOtP8YKOH2WPo1XOpwRUGdCoQDH2b8GZv/InGOY6zERRtDxZO3InCQN31ZUe6ZAVl6odWCa2lQVIaMuaOp29PoqRkp+BBmA8v5ek3AX36ZKGE5iWGoC+3uP4JqAJ8iJad1ZvyuH0lsMpEHVIt3A6oI4UWQ2ZZNZcu6axP2+DmrpS7oXVrYoaQyo1er2FfYpDhLtEQwPo0CY205q7sTX4lQSxB1Kzb4a8AOIZKXor3yog/J67vVOyyy5STHm613+x9AmCt6Nns1rjpVfqke/Y7BhnC8RaEFbzfgLQX4UtrWBE7y3Y7jBCzVo5590ejXp/+kMZIUz80wSqspZbBdWRHAQ2z8lGeyetnkvotu6InIpKS0uS8szzQhuMLKxh9DpBRdVNY4254iLOGXyEk2yRCenZrLQj7WeggJTm0RqYvdWPuKPqiUnb1xf17sbaiXOkX/2ayMb/ERrGCEDBIOhF98EWq41bn+QKPULusclJue/5HlladDC7WLoTO5HkmRjIYDh+9hSuGKXxPmVhlw4bFwVrALwvGjm48OlHoZWrFMlDdOsvaH52Vh68I5biEFfmLISp2ouEkHDQI=
