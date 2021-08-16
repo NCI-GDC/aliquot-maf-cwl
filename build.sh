@@ -3,15 +3,15 @@
 set -eo pipefail
 
 function build {
-	make -C "$1" build-docker WORKFLOW_NAME="$1"
+	make -C "$1" docker-login build-docker WORKFLOW_NAME="$1"
 }
 
 function publish-staging {
-	make -C "$1" publish-staging
+	make -C "$1" docker-login publish-staging
 }
 
 function publish-release {
-	make -C "$1" publish-release
+	make -C "$1" docker-login publish-release
 }
 
 function validate {
