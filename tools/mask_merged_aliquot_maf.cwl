@@ -5,7 +5,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/aliquot-maf-tools:f7a5a7d87abd12cc6b644698bb90854bc9679a01 
+    dockerPull: quay.io/ncigdc/aliquot-maf-tools:1.0.1rc9.dev0.g2cebd3e.d20210811
   - class: InlineJavascriptRequirement
     expressionLib:
       $import: ./util_lib.cwl
@@ -23,8 +23,8 @@ inputs:
     doc: capture stdout to this json filename
 
   input_maf:
-    type: File 
-    doc: input raw merged MAF to filter 
+    type: File
+    doc: input raw merged MAF to filter
     inputBinding:
       prefix: --input_maf
       position: 0
@@ -68,4 +68,4 @@ outputs:
 
 stdout: $(inputs.output_stats_filename)
 
-baseCommand: [/usr/local/bin/aliquot-maf-tools, MaskMergedAliquotMaf]
+baseCommand: [MaskMergedAliquotMaf]
