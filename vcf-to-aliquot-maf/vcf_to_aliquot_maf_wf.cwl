@@ -18,16 +18,16 @@ inputs:
   job_uuid: string
   annotated_vcf_uuid: string
   annotated_vcf_index_uuid: string
+  gnomad_noncancer_vcf_uuid: string
+  gnomad_noncancer_vcf_index_uuid: string
+  entrez_gene_id_json_uuid: string
   biotype_priority_uuid: string
   effect_priority_uuid: string
   custom_enst_uuid: string?
-  dbsnp_priority_db_uuid: string?
   reference_fasta_uuid: string
   reference_fasta_index_uuid: string
   cosmic_vcf_uuid: string?
   cosmic_vcf_index_uuid: string?
-  non_tcga_exac_vcf_uuid: string?
-  non_tcga_exac_vcf_index_uuid: string?
   hotspot_tsv_uuid: string?
   gdc_blacklist_uuid: string?
   gdc_pon_vcf_uuid: string?
@@ -55,8 +55,8 @@ inputs:
   context_size:
     type: int
     default: 5
-  exac_freq_cutoff:
-    type: float
+  gnomad_af_cutoff:
+    type: float?
     default: 0.001
   min_n_depth:
     type: int
@@ -65,7 +65,7 @@ inputs:
 
 outputs:
   aliquot_maf_uuid:
-    type: string 
+    type: string
     outputSource: upload_aliquot_maf/uuid
 
 steps:
@@ -78,13 +78,13 @@ steps:
       biotype_priority_uuid: biotype_priority_uuid
       effect_priority_uuid: effect_priority_uuid
       custom_enst_uuid: custom_enst_uuid
-      dbsnp_priority_db_uuid: dbsnp_priority_db_uuid
       reference_fasta_uuid: reference_fasta_uuid
       reference_fasta_index_uuid: reference_fasta_index_uuid
       cosmic_vcf_uuid: cosmic_vcf_uuid
       cosmic_vcf_index_uuid: cosmic_vcf_index_uuid
-      non_tcga_exac_vcf_uuid: non_tcga_exac_vcf_uuid
-      non_tcga_exac_vcf_index_uuid: non_tcga_exac_vcf_index_uuid
+      gnomad_noncancer_vcf_uuid: gnomad_noncancer_vcf_uuid
+      gnomad_noncancer_vcf_index_uuid: gnomad_noncancer_vcf_index_uuid
+      entrez_gene_id_json_uuid: entrez_gene_id_json_uuid
       hotspot_tsv_uuid: hotspot_tsv_uuid
       gdc_blacklist_uuid: gdc_blacklist_uuid
       gdc_pon_vcf_uuid: gdc_pon_vcf_uuid
@@ -98,6 +98,8 @@ steps:
       - effect_priority
       - reference_fasta
       - reference_fasta_index
+      - gnomad_noncancer_vcf
+      - entrez_gene_id_json
       - optional_files
 
   get_file_prefix:
@@ -113,7 +115,7 @@ steps:
     in:
       input_vcf: stage_data/annotated_vcf
       output_filename:
-        source: get_file_prefix/output 
+        source: get_file_prefix/output
         valueFrom: $(self + '.aliquot.maf.gz')
       caller_id: caller_id
       src_vcf_uuid: annotated_vcf_uuid
@@ -131,7 +133,9 @@ steps:
       reference_fasta: stage_data/reference_fasta
       reference_fasta_index: stage_data/reference_fasta_index
       reference_context_size: context_size
-      exac_freq_cutoff: exac_freq_cutoff
+      gnomad_noncancer_vcf: stage_data/gnomad_noncancer_vcf
+      entrez_gene_id_json: stage_data/entrez_gene_id_json
+      gnomad_af_cutoff: gnomad_af_cutoff
       min_n_depth: min_n_depth
       custom_enst:
         source: stage_data/optional_files
@@ -140,25 +144,11 @@ steps:
              var f = lookup_optional_file(self, "custom_enst_uuid");
              return f.length == 0 ? null : f[0];
            }
-      dbsnp_priority_db:
-        source: stage_data/optional_files
-        valueFrom: |
-          ${
-             var f = lookup_optional_file(self, "dbsnp_priority_db_uuid");
-             return f.length == 0 ? null : f[0];
-           }
       cosmic_vcf:
         source: stage_data/optional_files
         valueFrom: |
           ${
              var f = lookup_optional_file(self, "cosmic_vcf_uuid");
-             return f.length == 0 ? null : f[0];
-           }
-      non_tcga_exac_vcf:
-        source: stage_data/optional_files
-        valueFrom: |
-          ${
-             var f = lookup_optional_file(self, "non_tcga_exac_vcf_uuid");
              return f.length == 0 ? null : f[0];
            }
       hotspot_tsv:
@@ -202,9 +192,9 @@ steps:
     run: ../tools/bioclient_upload_pull_uuid.cwl
     in:
       config-file: bioclient_config
-      upload-bucket: upload_bucket 
+      upload-bucket: upload_bucket
       upload-key:
         source: [ job_uuid, make_aliquot_maf/output_maf ]
         valueFrom: $(self[0] + '/' + self[1].basename)
       input: make_aliquot_maf/output_maf
-    out: [ output, uuid ] 
+    out: [ output, uuid ]

@@ -33,7 +33,10 @@ outputs:
          var ret = [];
          var locbase = self.location.substr(0, self.location.lastIndexOf('/'))
          for( var i = 0; i < inputs.children.length; i++ ) {
-           ret.push({"class": "File", "location": locbase + '/' + inputs.children[i].basename});
+           ret.push({
+             "class": "File",
+             "location": locbase + '/' + inputs.children[i].basename,
+             "path": inputs.children[i].basename});
          }
          return ret
        }

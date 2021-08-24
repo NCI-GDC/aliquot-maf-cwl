@@ -3,7 +3,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/aliquot-maf-tools:3c130add6de3617ad23599e74eeba07343323d0c
+    dockerPull: quay.io/ncigdc/aliquot-maf-tools:2cebd3e14e54fdbc1b77770c4d2f72d904a64d5d
   - class: InlineJavascriptRequirement
     expressionLib:
       $import: ./util_lib.cwl
@@ -13,7 +13,6 @@ requirements:
         var listing = []
         listing.push(inputs.reference_fasta)
         listing.push(inputs.reference_fasta_index)
-        listing = listing.concat(inputs.gnomad_ref_directory.listing)
         return listing
       }
   - class: ResourceRequirement
@@ -262,19 +261,20 @@ inputs:
     secondaryFiles:
       - ".tbi"
 
-  gnomad_ref_directory:
-    type: Directory
+  gnomad_noncancer_vcf:
+    type: File
     inputBinding:
       position: 33
-      prefix: --gnomad_ref_prefix
-      valueFrom: |
-        ${
-          var somefile = inputs.gnomad_ref_directory.listing[0]
-          var idx = somefile.nameroot.lastIndexOf('.chr') + 1
-          var prefix = somefile.nameroot.substring(0, idx)
-          console.log(prefix)
-          return prefix
-        }
+      prefix: --gnomad_noncancer_vcf
+    secondaryFiles:
+      - ".tbi"
+
+  gnomad_af_cutoff:
+    type: float
+    inputBinding:
+      position: 34
+      prefix: --gnomad_af_cutoff
+    default: 0.001
 
   entrez_gene_id_json:
     type: File
