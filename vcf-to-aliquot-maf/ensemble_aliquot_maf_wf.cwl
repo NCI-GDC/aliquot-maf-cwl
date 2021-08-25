@@ -27,9 +27,12 @@ inputs:
   min_callers:
     type: int
     default: 2
-  maf_schema:
+  maf_merge_schema:
     type: string
     default: 2.0.0-aliquot-merged
+  maf_mask_schema:
+    type: string
+    default: gdc-2.0.0-aliquot-merged-masked
 
 outputs:
   aliquot_merged_raw_maf_uuid:
@@ -64,7 +67,7 @@ steps:
         source: get_file_prefix/output
         valueFrom: $(self + '.aliquot_ensemble_raw.maf.gz')
       min_n_depth: min_n_depth
-      maf_schema: maf_schema
+      maf_schema: maf_merge_schema
       mutect2_maf:
         source: stage_data/maf_files
         valueFrom: |
@@ -120,6 +123,7 @@ steps:
         source: get_file_prefix/output
         valueFrom: $(self + '.aliquot_ensemble_masked.maf.gz')
       min_callers: min_callers
+      maf_schema: maf_mask_schema
     out: [ output_masked_merged_maf, output_stats_json ]
 
   upload_merged_raw_maf:

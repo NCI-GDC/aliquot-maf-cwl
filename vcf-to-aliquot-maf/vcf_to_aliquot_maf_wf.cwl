@@ -62,6 +62,9 @@ inputs:
     type: int
     default: 7
   caller_id: string
+  maf_aliquot_schema:
+    type: string
+    default: gdc-2.0.0-aliquot
 
 outputs:
   aliquot_maf_uuid:
@@ -137,6 +140,7 @@ steps:
       entrez_gene_id_json: stage_data/entrez_gene_id_json
       gnomad_af_cutoff: gnomad_af_cutoff
       min_n_depth: min_n_depth
+      maf_schema: maf_aliquot_schema
       custom_enst:
         source: stage_data/optional_files
         valueFrom: |
