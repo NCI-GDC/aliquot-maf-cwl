@@ -29,7 +29,7 @@ inputs:
     default: 2
   maf_merge_schema:
     type: string
-    default: 2.0.0-aliquot-merged
+    default: gdc-2.0.0-aliquot-merged
   maf_mask_schema:
     type: string
     default: gdc-2.0.0-aliquot-merged-masked
