@@ -19,12 +19,12 @@ inputs:
   effect_priority_uuid: string
   reference_fasta_uuid: string
   reference_fasta_index_uuid: string
+  gnomad_noncancer_vcf_uuid: string
+  gnomad_noncancer_vcf_index_uuid: string
+  entrez_gene_id_json_uuid: string
   custom_enst_uuid: string?
-  dbsnp_priority_db_uuid: string?
   cosmic_vcf_uuid: string?
   cosmic_vcf_index_uuid: string?
-  non_tcga_exac_vcf_uuid: string?
-  non_tcga_exac_vcf_index_uuid: string?
   hotspot_tsv_uuid: string?
   gdc_blacklist_uuid: string?
   gdc_pon_vcf_uuid: string?
@@ -57,6 +57,14 @@ outputs:
     type: File
     outputSource: extract_ref_index/output
 
+  gnomad_noncancer_vcf:
+    type: File
+    outputSource: extract_gnomad_ref_vcf/output_indexed_file
+
+  entrez_gene_id_json:
+    type: File
+    outputSource: extract_entrez_gene_id_json/output
+
   optional_files:
     type:
       type: array
@@ -65,7 +73,7 @@ outputs:
 
 steps:
   extract_vcf:
-    run: ./extract_file_with_index.cwl 
+    run: ./extract_file_with_index.cwl
     in:
       bioclient_config: bioclient_config
       file_uuid: annotated_vcf_uuid
@@ -76,39 +84,51 @@ steps:
     run: ../../tools/bioclient_download.cwl
     in:
       config-file: bioclient_config
-      download_handle: biotype_priority_uuid 
+      download_handle: biotype_priority_uuid
     out: [ output ]
 
   extract_effect:
     run: ../../tools/bioclient_download.cwl
     in:
       config-file: bioclient_config
-      download_handle: effect_priority_uuid 
+      download_handle: effect_priority_uuid
     out: [ output ]
 
   extract_ref:
     run: ../../tools/bioclient_download.cwl
     in:
       config-file: bioclient_config
-      download_handle: reference_fasta_uuid 
+      download_handle: reference_fasta_uuid
     out: [ output ]
 
   extract_ref_index:
     run: ../../tools/bioclient_download.cwl
     in:
       config-file: bioclient_config
-      download_handle: reference_fasta_index_uuid 
+      download_handle: reference_fasta_index_uuid
+    out: [ output ]
+
+  extract_gnomad_ref_vcf:
+    run: ./extract_file_with_index.cwl
+    in:
+      bioclient_config: bioclient_config
+      file_uuid: gnomad_noncancer_vcf_uuid
+      index_uuid: gnomad_noncancer_vcf_index_uuid
+    out: [ output_indexed_file ]
+
+  extract_entrez_gene_id_json:
+    run: ../../tools/bioclient_download.cwl
+    in:
+      config-file: bioclient_config
+      download_handle: entrez_gene_id_json_uuid
     out: [ output ]
 
   get_optional_arrays:
     run: ../../tools/make_optional_extract_inputs.cwl
     in:
       custom_enst_uuid: custom_enst_uuid
-      dbsnp_priority_db_uuid: dbsnp_priority_db_uuid
       cosmic_vcf_uuid: cosmic_vcf_uuid
       cosmic_vcf_index_uuid: cosmic_vcf_index_uuid
-      non_tcga_exac_vcf_uuid: non_tcga_exac_vcf_uuid
-      non_tcga_exac_vcf_index_uuid: non_tcga_exac_vcf_index_uuid
       hotspot_tsv_uuid: hotspot_tsv_uuid
       gdc_blacklist_uuid: gdc_blacklist_uuid
       gdc_pon_vcf_uuid: gdc_pon_vcf_uuid

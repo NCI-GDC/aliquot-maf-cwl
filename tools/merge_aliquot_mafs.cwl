@@ -5,7 +5,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/aliquot-maf-tools:f7a5a7d87abd12cc6b644698bb90854bc9679a01 
+    dockerPull: quay.io/ncigdc/aliquot-maf-tools:1.0.1-rc.8-3-g9e5d940
   - class: InlineJavascriptRequirement
     expressionLib:
       $import: ./util_lib.cwl
@@ -76,8 +76,8 @@ inputs:
 
   min_n_depth:
     type: int
-    default: 7 
-    doc: Min N depth filtering to apply after averaged depths 
+    default: 7
+    doc: Min N depth filtering to apply after averaged depths
     inputBinding:
       position: 8
       prefix: --min_n_depth
@@ -88,4 +88,4 @@ outputs:
     outputBinding:
       glob: $(inputs.output_filename)
 
-baseCommand: [/usr/local/bin/aliquot-maf-tools, MergeAliquotMafs]
+baseCommand: [MergeAliquotMafs]

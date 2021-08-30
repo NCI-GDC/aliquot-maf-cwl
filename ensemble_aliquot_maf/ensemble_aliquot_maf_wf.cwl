@@ -27,16 +27,22 @@ inputs:
   min_callers:
     type: int
     default: 2
+  maf_merge_schema:
+    type: string
+    default: gdc-2.0.0-aliquot-merged
+  maf_mask_schema:
+    type: string
+    default: gdc-2.0.0-aliquot-merged-masked
 
 outputs:
   aliquot_merged_raw_maf_uuid:
-    type: string 
+    type: string
     outputSource: upload_merged_raw_maf/uuid
   aliquot_merged_masked_maf_uuid:
-    type: string 
+    type: string
     outputSource: upload_merged_masked_maf/uuid
   aliquot_maf_metrics_uuid:
-    type: string 
+    type: string
     outputSource: upload_maf_metrics/uuid
 
 steps:
@@ -58,9 +64,10 @@ steps:
     run: ../tools/merge_aliquot_mafs.cwl
     in:
       output_filename:
-        source: get_file_prefix/output 
+        source: get_file_prefix/output
         valueFrom: $(self + '.aliquot_ensemble_raw.maf.gz')
       min_n_depth: min_n_depth
+      maf_schema: maf_merge_schema
       mutect2_maf:
         source: stage_data/maf_files
         valueFrom: |
@@ -109,42 +116,43 @@ steps:
     run: ../tools/mask_merged_aliquot_maf.cwl
     in:
       output_stats_filename:
-        source: get_file_prefix/output 
+        source: get_file_prefix/output
         valueFrom: $(self + '.aliquot_ensemble_maf_metrics.json')
       input_maf: make_merged_raw_maf/output_merged_maf
       output_filename:
-        source: get_file_prefix/output 
+        source: get_file_prefix/output
         valueFrom: $(self + '.aliquot_ensemble_masked.maf.gz')
       min_callers: min_callers
+      maf_schema: maf_mask_schema
     out: [ output_masked_merged_maf, output_stats_json ]
 
   upload_merged_raw_maf:
     run: ../tools/bioclient_upload_pull_uuid.cwl
     in:
       config-file: bioclient_config
-      upload-bucket: upload_bucket 
+      upload-bucket: upload_bucket
       upload-key:
         source: [ job_uuid, make_merged_raw_maf/output_merged_maf ]
         valueFrom: $(self[0] + '/' + self[1].basename)
-      input: make_merged_raw_maf/output_merged_maf 
+      input: make_merged_raw_maf/output_merged_maf
     out: [ output, uuid ]
 
   upload_merged_masked_maf:
     run: ../tools/bioclient_upload_pull_uuid.cwl
     in:
       config-file: bioclient_config
-      upload-bucket: upload_bucket 
+      upload-bucket: upload_bucket
       upload-key:
         source: [ job_uuid, mask_merged_raw_maf/output_masked_merged_maf ]
         valueFrom: $(self[0] + '/' + self[1].basename)
-      input: mask_merged_raw_maf/output_masked_merged_maf 
+      input: mask_merged_raw_maf/output_masked_merged_maf
     out: [ output, uuid ]
 
   upload_maf_metrics:
     run: ../tools/bioclient_upload_pull_uuid.cwl
     in:
       config-file: bioclient_config
-      upload-bucket: upload_bucket 
+      upload-bucket: upload_bucket
       upload-key:
         source: [ job_uuid, mask_merged_raw_maf/output_stats_json ]
         valueFrom: $(self[0] + '/' + self[1].basename)
