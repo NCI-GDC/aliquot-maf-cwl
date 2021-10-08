@@ -6,6 +6,7 @@ class: CommandLineTool
 requirements:
   - class: DockerRequirement
     dockerPull: quay.io/ncigdc/aliquot-maf-tools:2.2.0
+
   - class: InlineJavascriptRequirement
     expressionLib:
       $import: ./util_lib.cwl
