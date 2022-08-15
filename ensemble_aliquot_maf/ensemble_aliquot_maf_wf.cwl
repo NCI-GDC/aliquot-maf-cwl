@@ -110,6 +110,28 @@ steps:
              var f = lookup_optional_file(self, "Pindel");
              return f.length == 0 ? null : f[0];
            }
+      caveman_maf:
+        source: stage_data/maf_files
+        valueFrom: |
+          ${
+             var f = lookup_optional_file(self, "CaVEMan");
+             return f.length == 0 ? null : f[0];
+           }
+      sanger-pindel_maf:
+        source: stage_data/maf_files
+        valueFrom: |
+          ${
+             var f = lookup_optional_file(self, "Sanger Pindel");
+             return f.length == 0 ? null : f[0];
+           }
+      gatk4-mutect2-pair_maf:
+        source: stage_data/maf_files
+        valueFrom: |
+          ${
+             var f = lookup_optional_file(self, "GATK4 MuTect2 Pair");
+             return f.length == 0 ? null : f[0];
+           }
+
     out: [ output_merged_maf ]
 
   mask_merged_raw_maf:
