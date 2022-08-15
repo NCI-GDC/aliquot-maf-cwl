@@ -74,12 +74,33 @@ inputs:
       position: 7
       prefix: --pindel
 
+  caveman_maf:
+    type: File?
+    doc: CaVEMan aliquot MAF file
+    inputBinding:
+      position: 8
+      prefix: --caveman
+
+  sanger-pindel_maf:
+    type: File?
+    doc: Sanger Pindel aliquot MAF file
+    inputBinding:
+      position: 9
+      prefix: --sanger-pindel
+
+  gatk4-mutect2-pair_maf:
+    type: File?
+    doc: GATK4 MuTect2 Pair aliquot MAF file
+    inputBinding:
+      position: 10
+      prefix: --gatk4-mutect2-pair
+
   min_n_depth:
     type: int
     default: 7
     doc: Min N depth filtering to apply after averaged depths
     inputBinding:
-      position: 8
+      position: 11
       prefix: --min_n_depth
 
 outputs:
