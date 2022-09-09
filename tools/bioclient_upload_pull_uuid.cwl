@@ -5,7 +5,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   - class: DockerRequirement
-    dockerPull: quay.io/ncigdc/bio-client:latest
+    dockerPull: docker.osdc.io/ncigdc/bio-client:latest
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
     coresMin: 1
