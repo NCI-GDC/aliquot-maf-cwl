@@ -1,4 +1,4 @@
-FROM docker.osdc.io/ncigdc/bio-alpine:py36-8dee591
+FROM quay.io/ncigdc/bio-alpine:py36-8dee591
 
 ARG WORKFLOW
 
