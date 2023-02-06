@@ -96,8 +96,7 @@ inputs:
       prefix: --gatk4-mutect2-pair
 
   min_n_depth:
-    type: int
-    default: 7
+    type: int?
     doc: Min N depth filtering to apply after averaged depths
     inputBinding:
       position: 11
