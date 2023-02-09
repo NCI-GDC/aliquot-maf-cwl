@@ -101,6 +101,13 @@ inputs:
     inputBinding:
       position: 11
       prefix: --min_n_depth
+  
+  tumor_only:
+    type: boolean?
+    doc: Sets tumor-only mode
+    inputBinding:
+      position: 12
+      prefix: --tumor_only
 
 outputs:
   output_merged_maf:

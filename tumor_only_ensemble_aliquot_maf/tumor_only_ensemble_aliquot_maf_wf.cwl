@@ -30,6 +30,9 @@ inputs:
   maf_mask_schema:
     type: string
     default: gdc-2.0.0-aliquot-merged-masked
+  tumor_only:
+    type: boolean
+    default: True
 
 outputs:
   aliquot_merged_raw_maf_uuid:
@@ -64,6 +67,7 @@ steps:
         source: get_file_prefix/output
         valueFrom: $(self + '.aliquot_ensemble_raw.maf.gz')
       maf_schema: maf_merge_schema
+      tumor_only: tumor_only
       mutect2_maf:
         source: stage_data/maf_files
         valueFrom: |
