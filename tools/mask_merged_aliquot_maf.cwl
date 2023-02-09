@@ -58,6 +58,13 @@ inputs:
     inputBinding:
       prefix: --min_callers
       position: 4
+  
+  tumor_only:
+    type: boolean?
+    default: False
+    inputBinding:
+      prefix: --tumor_only
+      position: 5
 
 outputs:
   output_masked_merged_maf:

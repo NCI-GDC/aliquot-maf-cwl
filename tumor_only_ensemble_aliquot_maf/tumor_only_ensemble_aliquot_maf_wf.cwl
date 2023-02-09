@@ -146,6 +146,7 @@ steps:
         valueFrom: $(self + '.aliquot_ensemble_masked.maf.gz')
       min_callers: min_callers
       maf_schema: maf_mask_schema
+      tumor_only: tumor_only
     out: [ output_masked_merged_maf, output_stats_json ]
 
   upload_merged_raw_maf:
