@@ -43,9 +43,6 @@ inputs:
   tumor_submitter_id: string
   tumor_aliquot_uuid: string
   tumor_bam_uuid: string
-  normal_submitter_id: string?
-  normal_aliquot_uuid: string?
-  normal_bam_uuid: string?
   sequencer:
     type:
       type: array
@@ -58,19 +55,16 @@ inputs:
   gnomad_af_cutoff:
     type: float?
     default: 0.001
-  min_n_depth:
-    type: int
-    default: 7
   caller_id: string
   maf_aliquot_schema:
     type: string
     default: gdc-2.0.0-aliquot
+  tumor_only:
+    type: boolean
+    default: True
   tumor_vcf_id:
     type: string?
     default: "TUMOR"
-  normal_vcf_id:
-    type: string?
-    default: "NORMAL"
 
 outputs:
   aliquot_maf_uuid:
@@ -129,12 +123,10 @@ steps:
       caller_id: caller_id
       src_vcf_uuid: annotated_vcf_uuid
       case_uuid: case_uuid
+      tumor_only: tumor_only
       tumor_submitter_id: tumor_submitter_id
       tumor_aliquot_uuid: tumor_aliquot_uuid
       tumor_bam_uuid: tumor_bam_uuid
-      normal_submitter_id: normal_submitter_id
-      normal_aliquot_uuid: normal_aliquot_uuid
-      normal_bam_uuid: normal_bam_uuid
       sequencer: sequencer
       maf_center: maf_center
       biotype_priority_file: stage_data/biotype_priority
@@ -145,10 +137,8 @@ steps:
       gnomad_noncancer_vcf: stage_data/gnomad_noncancer_vcf
       entrez_gene_id_json: stage_data/entrez_gene_id_json
       gnomad_af_cutoff: gnomad_af_cutoff
-      min_n_depth: min_n_depth
       maf_schema: maf_aliquot_schema
       tumor_vcf_id: tumor_vcf_id
-      normal_vcf_id: normal_vcf_id
       custom_enst:
         source: stage_data/optional_files
         valueFrom: |

@@ -5,7 +5,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/aliquot-maf-tools:3.0.0
+    dockerPull: docker.osdc.io/ncigdc/aliquot-maf-tools:3.2.0-2-g5f754b3
 
   - class: InlineJavascriptRequirement
     expressionLib:
@@ -58,6 +58,13 @@ inputs:
     inputBinding:
       prefix: --min_callers
       position: 4
+  
+  tumor_only:
+    type: boolean?
+    default: False
+    inputBinding:
+      prefix: --tumor_only
+      position: 5
 
 outputs:
   output_masked_merged_maf:

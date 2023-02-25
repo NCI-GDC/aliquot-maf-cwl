@@ -3,7 +3,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/aliquot-maf-tools:3.1.0-2-gd792a73
+    dockerPull: docker.osdc.io/ncigdc/aliquot-maf-tools:3.2.0-2-g5f754b3
   - class: InlineJavascriptRequirement
     expressionLib:
       $import: ./util_lib.cwl
@@ -49,6 +49,7 @@ inputs:
 
   tumor_only:
     type: boolean?
+    default: False
     doc: Is this a tumor-only VCF?
     inputBinding:
       position: 3
@@ -56,16 +57,14 @@ inputs:
 
   tumor_vcf_id:
     type: string?
-    default: "TUMOR"
-    doc: Name of the tumor sample in the VCF
+    doc: Name of the tumor sample in the VCF, typically 'TUMOR'
     inputBinding:
       position: 4
       prefix: --tumor_vcf_id
 
   normal_vcf_id:
     type: string?
-    default: "NORMAL"
-    doc: Name of the normal sample in the VCF
+    doc: Name of the normal sample in the VCF, typically 'NORMAL'
     inputBinding:
       position: 5
       prefix: --normal_vcf_id
@@ -223,8 +222,7 @@ inputs:
       prefix: --gdc_blacklist
 
   min_n_depth:
-    type: int
-    default: 7
+    type: int?
     doc: Flag variants where normal depth is <= INT as ndp [7].
     inputBinding:
       position: 29
