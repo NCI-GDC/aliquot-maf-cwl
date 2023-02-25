@@ -131,6 +131,13 @@ steps:
              var f = lookup_optional_file(self, "GATK4 MuTect2 Pair");
              return f.length == 0 ? null : f[0];
            }
+      gatk4-mutect2_maf:
+        source: stage_data/maf_files
+        valueFrom: |
+          ${
+            var f = lookup_optional_file(self, "GATK4 MuTect2 Pair");
+            return f.length == 0 ? null : f[0];
+          }
 
     out: [ output_merged_maf ]
 

@@ -5,7 +5,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/aliquot-maf-tools:3.1.0-1-gb5c1f5f
+    dockerPull: docker.osdc.io/ncigdc/aliquot-maf-tools:3.2.0-2-g5f754b3
   - class: InlineJavascriptRequirement
     expressionLib:
       $import: ./util_lib.cwl
@@ -94,19 +94,26 @@ inputs:
     inputBinding:
       position: 10
       prefix: --gatk4-mutect2-pair
+  
+  gatk4-mutect2_maf:
+    type: File?
+    doc: GATK4 MuTect2 aliquot MAF file
+    inputBinding:
+      position: 12
+      prefix: --gatk4-mutect2
 
   min_n_depth:
     type: int?
     doc: Min N depth filtering to apply after averaged depths
     inputBinding:
-      position: 11
+      position: 20
       prefix: --min_n_depth
   
   tumor_only:
     type: boolean?
     doc: Sets tumor-only mode
     inputBinding:
-      position: 12
+      position: 21
       prefix: --tumor_only
 
 outputs:
