@@ -8,4 +8,4 @@
     output: "fake.targeted_sequencing.MuTect2_GATK4"
   job: ./tests/make_prefix_job_b.json
   tool: ./tools/make_file_prefix.cwl
-  doc: Test of make prefix function with space and hyphen in caller 
+  doc: Test of make prefix function with space and hyphen in caller
