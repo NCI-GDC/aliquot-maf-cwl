@@ -79,6 +79,7 @@ for directory in *; do
 			--build-arg WORKFLOW="${directory}"
 
 		# Assign the final tags now so later images can build on this one.
+    spinal_case_dir=$(echo "${directory}" | tr '_' '-')
 		populate_image_tags "${directory}"
 		for TAG in "${IMAGE_TAGS[@]}"; do
 			docker tag "build-${directory}:${CURRENT_VERSION}" "$TAG"
