@@ -5,7 +5,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/bio-client:latest
+    dockerPull: "{{ docker_repo }}/bio-client:{{ bio_client }}"
   - class: InlineJavascriptRequirement
   - class: ResourceRequirement
     coresMin: 1
@@ -16,8 +16,17 @@ requirements:
     tmpdirMax: 1
     outdirMin: 1
     outdirMax: 1
+  - class: EnvVarRequirement
+    envDef:
+    - envName: "REQUESTS_CA_BUNDLE"
+      envValue: $(inputs.cert.path)
 
 inputs:
+  cert:
+      type: File
+      default:
+        class: File
+        location: /etc/ssl/certs/ca-certificates.crt
   config-file:
     type: File
     inputBinding:
