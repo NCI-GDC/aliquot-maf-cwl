@@ -38,9 +38,5 @@ steps:
       parent_file: extract_file/output
       children:
         source: extract_index/output
-        valueFrom: |
-          ${
-             var ret = [self];
-             return ret
-           }
+        valueFrom: $([self])
     out: [ output ]
