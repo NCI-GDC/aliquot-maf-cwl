@@ -2,5 +2,5 @@
      "docker_repo": "docker.osdc.io/ncigdc",
      "bio_client": "latest",
      "docker_repository": "docker.osdc.io/ncigdc",
-     "bio-alpine": "base"
+     "bio_alpine": "base"
 }
