@@ -5,7 +5,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/aliquot-maf-tools:3.2.0-2-g5f754b3
+    dockerPull: "{{ docker_repo }}/aliquot-maf-tools:{{ aliquot-maf-tools }}"
 
   - class: InlineJavascriptRequirement
     expressionLib:
