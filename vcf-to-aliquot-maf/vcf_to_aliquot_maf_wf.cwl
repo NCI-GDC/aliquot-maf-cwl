@@ -75,7 +75,7 @@ inputs:
 outputs:
   aliquot_maf_uuid:
     type: string
-    outputSource: upload_aliquot_maf/uuid
+    outputSource: emit_aliquot_maf/output
 
 steps:
   stage_data:
@@ -201,12 +201,20 @@ steps:
     out: [ output_maf ]
 
   upload_aliquot_maf:
-    run: ../tools/bioclient_upload_pull_uuid.cwl
+    run: ../tools/bio_client_upload_pull_uuid.cwl
     in:
-      config-file: bioclient_config
-      upload-bucket: upload_bucket
-      upload-key:
+      config_file: bioclient_config
+      upload_bucket: upload_bucket
+      upload_key:
         source: [ job_uuid, make_aliquot_maf/output_maf ]
         valueFrom: $(self[0] + '/' + self[1].basename)
       input: make_aliquot_maf/output_maf
-    out: [ output, uuid ]
+    out: [ output ]
+
+  emit_aliquot_maf:
+    run: ../tools/emit_json_value.cwl
+    in:
+      input: upload_aliquot_maf/output
+      key: 
+        default: 'did'
+    out: [ output ] 

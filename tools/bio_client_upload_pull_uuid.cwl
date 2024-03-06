@@ -1,12 +1,9 @@
-#!/usr/bin/env cwl-runner
-
 cwlVersion: v1.0
-
 class: CommandLineTool
+id: bio_client_upload_pull_uuid
 requirements:
   - class: DockerRequirement
-    dockerPull: docker.osdc.io/ncigdc/bio-client:latest
-  - class: InlineJavascriptRequirement
+    dockerPull: "{{ docker_repo }}/bio-client:{{ bio_client }}"
   - class: ResourceRequirement
     coresMin: 1
     coresMax: 1
@@ -16,9 +13,19 @@ requirements:
     tmpdirMax: 1
     outdirMin: 1
     outdirMax: 1
+  - class: EnvVarRequirement
+    envDef:
+    - envName: "REQUESTS_CA_BUNDLE"
+      envValue: $(inputs.cert.path)
 
 inputs:
-  config-file:
+  cert:
+      type: File
+      default:
+        class: File
+        location: /etc/ssl/certs/ca-certificates.crt
+
+  config_file:
     type: File
     inputBinding:
       prefix: --config-file
@@ -30,13 +37,13 @@ inputs:
     inputBinding:
       position: 1
 
-  upload-bucket:
+  upload_bucket:
     type: string
     inputBinding:
       prefix: --upload-bucket
       position: 2
 
-  upload-key:
+  upload_key:
     type: string
     inputBinding:
       prefix: --upload_key
@@ -51,16 +58,6 @@ outputs:
   output:
     type: File
     outputBinding:
-      glob: "*_upload.json"      
+      glob: "*_upload.json"
 
-  uuid:
-    type: string 
-    outputBinding:
-      glob: "*_upload.json"      
-      loadContents: true
-      outputEval: |
-        ${
-           var data = JSON.parse(self[0].contents);
-           return(data["did"]);
-         }
 baseCommand: [/usr/local/bin/bio_client.py]

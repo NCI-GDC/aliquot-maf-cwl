@@ -37,13 +37,13 @@ inputs:
 outputs:
   aliquot_merged_raw_maf_uuid:
     type: string
-    outputSource: upload_merged_raw_maf/uuid
+    outputSource: emit_merged_raw_uuid/output
   aliquot_merged_masked_maf_uuid:
     type: string
-    outputSource: upload_merged_masked_maf/uuid
+    outputSource: emit_merged_masked_uuid/output
   aliquot_maf_metrics_uuid:
     type: string
-    outputSource: upload_maf_metrics/uuid
+    outputSource: emit_maf_metrics_uuid/output
 
 steps:
   stage_data:
@@ -157,34 +157,59 @@ steps:
     out: [ output_masked_merged_maf, output_stats_json ]
 
   upload_merged_raw_maf:
-    run: ../tools/bioclient_upload_pull_uuid.cwl
+    run: ../tools/bio_client_upload_pull_uuid.cwl
     in:
-      config-file: bioclient_config
-      upload-bucket: upload_bucket
-      upload-key:
+      config_file: bioclient_config
+      upload_bucket: upload_bucket
+      upload_key:
         source: [ job_uuid, make_merged_raw_maf/output_merged_maf ]
         valueFrom: $(self[0] + '/' + self[1].basename)
       input: make_merged_raw_maf/output_merged_maf
-    out: [ output, uuid ]
+    out: [ output ]
 
   upload_merged_masked_maf:
-    run: ../tools/bioclient_upload_pull_uuid.cwl
+    run: ../tools/bio_client_upload_pull_uuid.cwl
     in:
-      config-file: bioclient_config
-      upload-bucket: upload_bucket
-      upload-key:
+      config_file: bioclient_config
+      upload_bucket: upload_bucket
+      upload_key:
         source: [ job_uuid, mask_merged_raw_maf/output_masked_merged_maf ]
         valueFrom: $(self[0] + '/' + self[1].basename)
       input: mask_merged_raw_maf/output_masked_merged_maf
-    out: [ output, uuid ]
+    out: [ output ]
 
   upload_maf_metrics:
-    run: ../tools/bioclient_upload_pull_uuid.cwl
+    run: ../tools/bio_client_upload_pull_uuid.cwl
     in:
-      config-file: bioclient_config
-      upload-bucket: upload_bucket
-      upload-key:
+      config_file: bioclient_config
+      upload_bucket: upload_bucket
+      upload_key:
         source: [ job_uuid, mask_merged_raw_maf/output_stats_json ]
         valueFrom: $(self[0] + '/' + self[1].basename)
       input: mask_merged_raw_maf/output_stats_json
-    out: [ output, uuid ]
+    out: [ output ]
+
+
+  emit_merged_raw_uuid:
+    run: ../tools/emit_json_value.cwl
+    in:
+      input: upload_merged_raw_maf/output
+      key:
+        default: did
+    out: [ output ]
+
+  emit_merged_masked_uuid:
+    run: ../tools/emit_json_value.cwl
+    in:
+      input: upload_merged_masked_maf/output
+      key:
+        default: did
+    out: [ output ]
+
+  emit_maf_metrics_uuid:
+    run: ../tools/emit_json_value.cwl
+    in:
+      input: upload_maf_metrics/output
+      key:
+        default: did
+    out: [ output ]

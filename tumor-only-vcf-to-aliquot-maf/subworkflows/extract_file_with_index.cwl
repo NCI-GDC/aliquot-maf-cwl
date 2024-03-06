@@ -19,16 +19,16 @@ outputs:
 
 steps:
   extract_file:
-    run: ../../tools/bioclient_download.cwl
+    run: ../../tools/bio_client_download.cwl
     in:
-      config-file: bioclient_config
+      config_file: bioclient_config
       download_handle: file_uuid
     out: [ output ]
 
   extract_index:
-    run: ../../tools/bioclient_download.cwl
+    run: ../../tools/bio_client_download.cwl
     in:
-      config-file: bioclient_config
+      config_file: bioclient_config
       download_handle: index_uuid
     out: [ output ]
 

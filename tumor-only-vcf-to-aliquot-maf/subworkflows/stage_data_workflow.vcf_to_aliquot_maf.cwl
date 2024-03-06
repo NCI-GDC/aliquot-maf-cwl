@@ -81,30 +81,30 @@ steps:
     out: [ output_indexed_file ]
 
   extract_biotype:
-    run: ../../tools/bioclient_download.cwl
+    run: ../../tools/bio_client_download.cwl
     in:
-      config-file: bioclient_config
+      config_file: bioclient_config
       download_handle: biotype_priority_uuid
     out: [ output ]
 
   extract_effect:
-    run: ../../tools/bioclient_download.cwl
+    run: ../../tools/bio_client_download.cwl
     in:
-      config-file: bioclient_config
+      config_file: bioclient_config
       download_handle: effect_priority_uuid
     out: [ output ]
 
   extract_ref:
-    run: ../../tools/bioclient_download.cwl
+    run: ../../tools/bio_client_download.cwl
     in:
-      config-file: bioclient_config
+      config_file: bioclient_config
       download_handle: reference_fasta_uuid
     out: [ output ]
 
   extract_ref_index:
-    run: ../../tools/bioclient_download.cwl
+    run: ../../tools/bio_client_download.cwl
     in:
-      config-file: bioclient_config
+      config_file: bioclient_config
       download_handle: reference_fasta_index_uuid
     out: [ output ]
 
@@ -117,9 +117,9 @@ steps:
     out: [ output_indexed_file ]
 
   extract_entrez_gene_id_json:
-    run: ../../tools/bioclient_download.cwl
+    run: ../../tools/bio_client_download.cwl
     in:
-      config-file: bioclient_config
+      config_file: bioclient_config
       download_handle: entrez_gene_id_json_uuid
     out: [ output ]
 
