@@ -5,7 +5,7 @@ cwlVersion: v1.0
 class: CommandLineTool
 requirements:
   - class: DockerRequirement
-    dockerPull: "{{ docker_repo }}/aliquot-maf-tools:{{ aliquot-maf-tools }}"
+    dockerPull: "{{ docker_repo }}/aliquot-maf-tools:{{ aliquot_maf_tools }}"
   - class: InlineJavascriptRequirement
     expressionLib:
       $import: ./util_lib.cwl
