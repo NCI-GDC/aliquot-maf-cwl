@@ -2,5 +2,5 @@
      "docker_repo": "docker.osdc.io/ncigdc",
      "bio_client": "latest",
      "bio_alpine": "base",
-     "aliquot_maf_tools": "3.3.0-4-gc653171"
+     "aliquot_maf_tools": "3.4.0"
 }
