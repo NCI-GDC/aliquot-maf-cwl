@@ -287,4 +287,4 @@ outputs:
     outputBinding:
       glob: $(inputs.output_filename)
 
-baseCommand: [VcfToAliquotMaf]
+baseCommand: [aliquotmaf, VcfToAliquotMaf]
