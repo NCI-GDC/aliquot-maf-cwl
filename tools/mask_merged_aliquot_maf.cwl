@@ -75,4 +75,4 @@ outputs:
 
 stdout: $(inputs.output_stats_filename)
 
-baseCommand: [MaskMergedAliquotMaf]
+baseCommand: [aliquotmaf, MaskMergedAliquotMaf]
