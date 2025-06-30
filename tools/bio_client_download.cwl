@@ -24,7 +24,7 @@ inputs:
       type: File
       default:
         class: File
-        location: /etc/ssl/certs/ca-certificates.crt
+        location: /etc/pki/tls/certs/ca-bundle.crt
 
   config_file:
     type: File
