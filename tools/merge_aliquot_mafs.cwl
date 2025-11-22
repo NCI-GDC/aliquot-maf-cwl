@@ -122,4 +122,4 @@ outputs:
     outputBinding:
       glob: $(inputs.output_filename)
 
-baseCommand: [MergeAliquotMafs]
+baseCommand: [aliquotmaf, MergeAliquotMafs]
