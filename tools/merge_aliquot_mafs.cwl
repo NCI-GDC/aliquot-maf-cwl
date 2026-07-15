@@ -101,6 +101,20 @@ inputs:
     inputBinding:
       position: 12
       prefix: --gatk4-mutect2
+  
+  svaba-somatic_maf:
+    type: File?
+    doc: SvABA Somatic aliquot MAF file
+    inputBinding:
+      position: 12
+      prefix: --svaba-somatic
+  
+  strelka-somatic_maf:
+    type: File?
+    doc: Strelka Somatic aliquot MAF file
+    inputBinding:
+      position: 12
+      prefix: --strelka-somatic
 
   min_n_depth:
     type: int?
