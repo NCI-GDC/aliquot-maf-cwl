@@ -1,6 +1,6 @@
 cwlVersion: v1.0
 class: Workflow
-
+doc: This copy is for use with the new merged panel of normals
 requirements:
   - class: InlineJavascriptRequirement
     expressionLib:
